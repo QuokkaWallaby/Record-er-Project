@@ -11,3 +11,8 @@ CREATE TABLE public.alert (
 	create_time timetz NOT NULL,
 	CONSTRAINT alert_pkey PRIMARY KEY (alert_id)
 );
+
+
+-- public.alert foreign keys
+
+ALTER TABLE public.alert ADD CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES public."user"(user_id);

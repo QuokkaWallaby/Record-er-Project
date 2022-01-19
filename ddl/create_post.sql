@@ -14,3 +14,8 @@ CREATE TABLE public.post (
 	created_time timestamptz NOT NULL,
 	CONSTRAINT "Post_pkey" PRIMARY KEY (post_id)
 );
+
+
+-- public.post foreign keys
+
+ALTER TABLE public.post ADD CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES public."user"(user_id);
