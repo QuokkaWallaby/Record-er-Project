@@ -1,15 +1,18 @@
 import React from 'react';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
-import { Grid, Link, Stack, Button, Divider, Paper, Avatar, Box, IconButton, Collapse, InputBase, Typography } from '@mui/material';
+import { ListItem, Link, Stack, Button, Divider, Paper, Avatar, Box, IconButton, Collapse, InputBase, Typography } from '@mui/material';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
-//import Tooltip from '@mui/material/Tooltip';
-//import ArrowRight from '@mui/icons-material/ArrowRight';
+import EditIcon from '@mui/icons-material/Edit';
+import Tooltip from '@mui/material/Tooltip';
+import ArrowRight from '@mui/icons-material/ArrowRight';
 //import Settings from '@mui/icons-material/Settings';
+
+import Category from '../../components/Category';
 
 /* 검색바 스타일 */
 const Search = styled('div')(({ theme }) => ({
@@ -152,19 +155,23 @@ export default function Sidebar(props) {
                 />
               </Search>
               <Divider />
+              <ListItem component="div" disablePadding>
+              <ListItemButton sx={{ height: 56 }}>
+                <ListItemText
+                  primary="전체보기"
+                  primaryTypographyProps={{
+                    fontWeight: 'bold',
+                    variant: 'button',
+                  }} />
+              </ListItemButton>
+              <Tooltip title="카테고리 설정">
+                  <Category/>
+              </Tooltip>
+            </ListItem>
               <List
                 sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
                 component="nav"
-                aria-labelledby="nested-list-subheader"
-              >
-                <ListItemButton>
-                  <ListItemText
-                    primary="전체보기"
-                    primaryTypographyProps={{
-                      fontWeight: 'bold',
-                      variant: 'button',
-                    }} />
-                </ListItemButton>
+                aria-labelledby="nested-list-subheader">
                 <ListItemButton>
                   <ListItemText
                     primary="카테고리1"
