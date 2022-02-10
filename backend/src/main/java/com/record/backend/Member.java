@@ -14,4 +14,13 @@ public class Member {
 	@Id @GeneratedValue
 	private Long id;
 	private String username;
+	private String email;
+
+	public Member() {
+	}
+
+	public Member(String username, String email) {
+		this.username = username;
+		this.email = email;
+	}
 }

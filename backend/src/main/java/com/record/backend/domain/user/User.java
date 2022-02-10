@@ -43,23 +43,18 @@ public class User {
 	private LocalDateTime created_time;
 
 	//1대 다 관계
-	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<Post> postList = new ArrayList<>();
 
-	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<Category> categoryList = new ArrayList<>();
 
-	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<Comment> commentList = new ArrayList<>();
 
-	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<CommentLike> commentLikeList = new ArrayList<>();
 
-	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<PostLike> postLikeList = new ArrayList<>();
 
