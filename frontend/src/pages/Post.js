@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 import InputUnstyled from '@mui/base/InputUnstyled';
@@ -63,14 +64,24 @@ export default function Post() {
     }
     `;
 
-    const CustomAvatar = styled(Avatar)`
-    &:hover {
-      color: dark ? grey[300] : grey[900];
-      cursor: pointer;
-    }
-    `;
+  const CustomAvatar = styled(Avatar)`
+  &:hover {
+    color: dark ? grey[300] : grey[900];
+    cursor: pointer;
+  }
+  `;
 
+  const CustomButton = styled(Button)`
+  background: white;
+  color: #ff5f70;
+  &:hover {
+    background : white;
+    cursor: pointer;
+  }
+  `;
+  
   const [ postData, setPostData ] = useState([]);
+  const { user: currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const { postId } = useParams();
@@ -90,6 +101,54 @@ export default function Post() {
   const onClickUser = () => {
     navigate('/Userhome/' + `${postData.userId}`)
   }
+
+  // 게시글 수정, 삭제
+  //////////////////////////////////수정//////////////////////////////////
+  const onPostUpdate = () => {
+    navigate('/EditorUpdate/' + `${postId}`)
+  }
+
+  //////////////////////////////////삭제//////////////////////////////////
+  const useConfirm = (message=null, onConfirm, onCancel) => {
+
+    const confirmAction = () => {
+      if (window.confirm(message)) {
+        onConfirm();
+      } else {
+        onCancel();
+      }
+    };
+
+    return confirmAction;
+  }
+
+  const deleteConfirm = () => {
+    axios.delete('http://localhost:8080/board/posts/' + `${postId}`)
+    .then(() => {
+      alert('게시물을 성공적으로 삭제했습니다!')
+      navigate('/Userhome/' + `${currentUser.userId}`)
+    })
+    .catch(() => {
+      alert('게시물 삭제를 실패했습니다!')
+    })
+  }
+
+  const cancelConfirm = () => {
+    navigate(0);
+  }
+
+  const onPostDelete = useConfirm(
+    "게시물을 삭제하시겠습니까?",
+    deleteConfirm,
+    cancelConfirm
+  );
+
+  let authorityUpdate, authorityDelete = null;
+
+  if(postData.userId === currentUser.userId) {
+    authorityUpdate = <CustomButton onClick={onPostUpdate}>수정</CustomButton>
+    authorityDelete = <CustomButton onClick={onPostDelete}>삭제</CustomButton>
+  } else {}
 
   return(
     <Box
@@ -111,9 +170,20 @@ export default function Post() {
         alignItems: 'center' 
         }}
       >
-        <Typography variant="h4" sx={{ py: '20px' }}>{postData.title}제목 들어갈 것임</Typography>
+        <Typography variant="h4" sx={{ py: '20px' }}>{postData.title}</Typography>
       </Box>
 
+      <Box sx={{
+        width: '600px',
+        display: 'flex', 
+        flexDirection: 'row', 
+        pb: 5,
+        }}
+      >
+        {authorityUpdate}
+        {authorityDelete}
+      </Box>
+    
       {/* 작성자 */}
       <Box sx={{ 
         width: '600px',
