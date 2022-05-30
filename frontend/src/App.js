@@ -16,6 +16,7 @@ import Category from './components/Category/Category';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Editor from './pages/Editor';
+import EditorUpdate from "./pages/EditorUpdate";
 import User from './pages/User';
 import Post from './pages/Post';
 import Main from './pages/Main';
@@ -41,6 +42,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/editor" element={<Editor />} />
+            <Route path="/editorupdate/:postId" element={<EditorUpdate />} />
             <Route path="/user" element={<User />} />
             <Route path="/main" element={<Main />} />
             <Route path="/userhome" element={<UserHome />} />
